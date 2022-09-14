@@ -101,7 +101,28 @@ print(np.mean(sample_means))
 # Print mean of num_users in amir_deals
 print(np.mean(amir_deals['num_users']))
 
+# ---------------------------------------------------------------------------- #
+# Poisson Distribution
+# Import poisson from scipy.stats and calculate the probability that Amir responds
+# to 5 leads in a day, given that he responds to an average of 4
+from scipy.stats import poisson
+prob_5 = poisson.pmf(5, 4)
+print(prob_5)
 
 # ---------------------------------------------------------------------------- #
-# ---------------------------------------------------------------------------- #
+# More distributions
+# Import expon from scipy.stats. What's the probability it takes Amir less than
+# an hour to respond to a lead? On average, it takes 2.5 hours
+from scipy.stats import expon
+less_1_hour = expon.cdf(1, scale=2.5)
+print(less_1_hour)
+
+# What's the probability it takes Amir more than 4 hours to respond to a lead?
+more_4_hours = 1 - expon.cdf(4, scale=2.5)
+print(more_4_hours)
+
+# What's the probability it takes Amir 3-4 hours to respond to a lead?
+to_3_or_4 = expon.cdf(4, scale=2.5) - expon.cdf(3, scale=2.5)
+print(to_3_or_4)
+
 # ---------------------------------------------------------------------------- #
