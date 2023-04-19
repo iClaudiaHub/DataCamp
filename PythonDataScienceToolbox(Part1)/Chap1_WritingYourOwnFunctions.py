@@ -89,7 +89,7 @@ tweets_df = pd.read_csv("datasets/tweets.csv")
 langs_count = {}
 
 # Extract column from DataFrame: col
-col = df['lang']
+col = tweets_df['lang']
 
 #  Iterate over 'lang' column in DataFrame
 for entry in col:
