@@ -101,18 +101,168 @@ def echo_shout(word):
 # Call function echo_shout() with argument "hello"
 echo_shout('hello')
 
+
 # -------------------------------------------------------------------------------------------------------------------- #
+# Functions with one default argument
+def shout_echo(word1, echo=1):
+    """Concatenate echo copies of word1 and three exclamation marks at the end of the sting."""
+    #     Concatenate echo copies of word1 using * operator.Assign the result to echo_word
+    echo_word = word1 * echo
+    #     Concatenate '!!!' to echo_word: shout_word
+    shout_word = echo_word + "!!!"
+    #     Return shout_word
+    return shout_word
+
+
+# Call shout_echo() with "Hey": no_echo
+no_echo = shout_echo("Hey")
+
+# Call shout_echo() with 'Hey' and echo=5: with_echo
+with_echo = shout_echo('Hey', echo=5)
+
+print(no_echo)
+print(with_echo)
+
+
 # -------------------------------------------------------------------------------------------------------------------- #
+# Functions with multiple default arguments
+def shout_echo(word1, echo=1, intense=False):
+    """Concatenate echo copies of word1 and three exclamatin marks at the end of the sting."""
+    #     Concatenate echo copies pf word1 using * operator: echo_word
+    echo_word = word1 * echo
+    # Make echo_word uppercase if intense is True
+    if intense is True:
+        #         Make uppercase and concatenate '!!!': echo_word_new
+        echo_word_new = echo_word.upper() + '!!!'
+    else:
+        #         Concatenate '!!!' to echo_word: echo_word_new
+        echo_word_new = echo_word + '!!!'
+    #     Return echo_word_new
+    return echo_word_new
+
+
+# Call shout_echo() with 'Hey', echo=5 and intense=True: with_big_echo
+with_big_echo = shout_echo("Hey", echo=5, intense=True)
+
+# Call shout_echo() with 'Hey' and intense=True: big_no_echo
+big_no_echo = shout_echo("Hey", intense=True)
+
+print(with_big_echo)
+print(big_no_echo)
+
+
 # -------------------------------------------------------------------------------------------------------------------- #
+# Functions with variable-length arguments (*args)
+def gibberish(*args):
+    """Concatenate strings in *args together"""
+    #     Initialize an empty sting:hodgepodge
+    hodgepodge = ""
+    #       Concatenate the strings in args
+    for word in args:
+        hodgepodge += word
+
+    #   Return hodgepodge
+    return hodgepodge
+
+
+#  Call gibberish() with one string: one_word
+one_word = gibberish('luke')
+# Call gibberish() with five strings: many_words
+many_words = gibberish("luke", "leia", "han", "obi", "darth")
+
+print(one_word)
+print(many_words)
+
+
 # -------------------------------------------------------------------------------------------------------------------- #
+# Functions with variable-length keyword arguments (**kwargs)
+def report_staus(**kwargs):
+    """Print out the status of a movie character."""
+
+    print("\nBEGIN: REPORT\n")
+
+    #   Iterate over the key-value pairs of kwargs
+    for keys, value in kwargs.items():
+        #         Print out the keys and values, separated by a column
+        print(keys + ":" + value)
+    print("\nEND REPORT")
+
+
+# First call to report_status()
+report_staus(name='luke', affiliation='jedi', status='missing')
+
+# Second call to report_status()
+report_staus(name='anakin', affiliation='sith lord', status='deceased')
+
 # -------------------------------------------------------------------------------------------------------------------- #
+# Bringing it all together (1)
+
+import pandas as pd
+
+tweets_df = pd.read_csv('datasets/tweets.csv')
+
+
+def count_entries(tweets_df, col_name='lang'):
+    """return a dictionary with counts of occurrences as value for each key."""
+    #     Initialize an empty dictionary:cols_count
+    cols_count = {}
+    #     Extact column from DataFrame: col
+    col = tweets_df[col_name]
+
+    #     Iterate over the column in DataFrame
+    for entry in col:
+        #         If entry in col_count, add1
+        if entry in cols_count.keys():
+            cols_count[entry] += 1
+        #       Else add the entry to cols_count, set the value to 1
+        else:
+            cols_count[entry] = 1
+
+    #   Return the cols_count dictionary
+    return cols_count
+
+
+# Call count_entries(): result1
+result1 = count_entries(tweets_df)
+
+# call count_entries(): result2
+result2 = count_entries(tweets_df, col_name='source')
+
+print(result1)
+print(result2)
+
+
 # -------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------- #
-# -------------------------------------------------------------------------------------------------------------------- #
+# Bringing it all together (2)
+
+def count_entries(df, *args):
+    """Return a dictionary with counts of occurrences as value for each key."""
+
+    #     Initialize an empty dictionary:cols_count
+    cols_count = {}
+
+    #     Iterate over column names in args
+    for col_name in args:
+        #         Extract column fromDaraFrame: col
+        col = tweets_df[col_name]
+        #         Iterate over the column in DataFrame
+        for entry in col:
+            #             If entry is in cols_count, add1
+            if entry in cols_count.keys():
+                cols_count[entry] += 1
+            else:
+                cols_count[entry] = 1
+    #   Return the cols_count
+    return cols_count
+
+
+# Call count_entries(): result1
+result1 = count_entries(tweets_df, 'lang')
+
+# Call count_entries(): result2
+result2 = count_entries(tweets_df, 'lang', 'source')
+
+print(result1)
+print(result2)
+
 # -------------------------------------------------------------------------------------------------------------------- #
